@@ -35,12 +35,13 @@ Also show that
     \cov[\yy] = \cov[A\xx + \bb] = A \cov[\xx] A^\T = A\Sigmab A^\T.
 \]
 \end{problem}
-\begin{solution}
-    \vfill
+\begin{solution} 
+
+	We wish to show that \EE[\yy] = \EE[A\xx + \bb] = A\EE[\xx] + \bb. By definition of expectation, we have $$\EE[\yy] = \int_S(A\xx + \bb)\PP(x)dx,$$ where $S$ is the space contains all possible $x$. Then, we can rearrange to get $$\EE[\yy] =  A\int_S\xx \PP(x)dx +  \bb\int_S\PP(x)dx.$$ Note that by definition of expectation, $\EE[\xx] =\int_S\xx \PP(x)dx$. Also by definition of random variables $\int_S\PP(x)dx =1$. Thus, we can see that $\EE[\yy] =  A\EE[\xx] +  \bb.$\\
+    	
+    Next, we wish to show that $\cov[\yy] = \cov[A\xx + \bb] = A \cov[\xx] A^\T = A\Sigmab A^\T.$ We are given $\yy = A\xx + \bb$ so that $\cov[\yy] = \cov[A\xx+\bb]$. Then, by definition of covariance, we have $\cov[A\xx+\bb] = \EE[(A\xx+b - \EE[A\xx+b])(A\xx+b - \EE[A\xx+b])^T]$. By linearity of expectation, we can rewrite as $\cov[A\xx+\bb] = \EE[(A\xx+b - A\EE[\xx] - b)(A\xx+b - A\EE[\xx]-b)^T]$. Simplifying, we get $\cov[A\xx+\bb] = \EE[(A\xx - A\EE[\xx])(A(\xx- \EE[\xx]))^T]$. Applying transpose in the second term inside expectation, we get $\cov[A\xx+\bb] = \EE[(A\xx - A\EE[\xx])(\xx- \EE[\xx])^TA^T]$. Since $A$ and $A^T$ are constants, by linearity, we have $\cov[A\xx+\bb] = A\EE[(\xx - A\EE[\xx])(\xx- \EE[\xx])^T]A^T$. Lastly, by definition of covariance, we see $\cov[A\xx+\bb] = A\cov[\xx]A^T = A\Sigmab A^T$ as desired.
 \end{solution}
 \newpage
-
-
 
 
 \begin{problem}[2]
@@ -59,7 +60,83 @@ Given the dataset $\Dc = \{(x,y)\} = \{(0,1), (2,3), (3,6), (4,8)\}$
 
 \end{problem}
 \begin{solution}
-    \vfill
+    \begin{enumerate}
+    	\item Let $$X = \begin{bmatrix}
+1 & 0 \\
+1 & 2 \\
+1 & 3 \\
+1 & 4
+\end{bmatrix}\text{ and } \yy = \begin{bmatrix}
+1 \\
+3 \\
+6 \\
+8
+\end{bmatrix}.$$
+To find the least square estimate using Cramer's Rule, we need to set $X^TX \theta = X^T\yy$ where $\theta = \begin{bmatrix}
+	\theta_0\\
+	\theta_1
+\end{bmatrix}$. Plugging in, we get $$X^TX\theta = \begin{bmatrix}
+	4 & 9\\
+	9 & 29
+\end{bmatrix}\begin{bmatrix}
+	\theta_0\\
+	\theta_1
+\end{bmatrix} = X^T\yy = \begin{bmatrix}
+	18\\
+	56
+\end{bmatrix}.$$
+Next, we apply Cramer's Rule to solve for $\theta_0$ and $\theta_1$. $$\theta_0 =\frac{
+\begin{vmatrix}
+18 & 9 \\
+56 & 29
+\end{vmatrix}
+}{
+\begin{vmatrix}
+4 & 9 \\
+9 & 29
+\end{vmatrix}
+} = \frac{18}{35} \text{ and }\theta_1 =\frac{
+\begin{vmatrix}
+4 & 18 \\
+9 & 56
+\end{vmatrix}
+}{
+\begin{vmatrix}4 & 9 \\
+9 & 29
+\end{vmatrix}
+} = \frac{62}{35}$$
+
+Thus, for the given dataset,  we found the least square estimate is $y = \frac{18}{35} +\frac{62}{35}x$ using Cramer's Rule
+
+\newpage
+\item Using the normal equation we can solve for $\theta$ using the following formula,
+$$\theta = (X^TX)^{-1}X^T\yy.$$ Then, we can plug in values from part a and evaluate, $$\theta = \begin{bmatrix}
+	4 & 9\\
+	9 & 29
+\end{bmatrix}^{-1} \begin{bmatrix}
+	1 & 1 & 1 & 1\\
+	0 & 2 & 3 & 4
+\end{bmatrix}\begin{bmatrix}
+1 \\
+3 \\
+6 \\
+8
+\end{bmatrix} = \begin{bmatrix}
+\frac{18}{35}\\
+\frac{62}{35}
+\end{bmatrix}.$$
+Thus, we see that the solution using the normal equation is the same as using Cramer's rule as in part a.
+
+\item Plotted data and optimal linear fit.
+
+\includegraphics{hw1pr2c.png}
+\newpage
+\item Plotted data with Gaussian noise and new least square estimate. Note that the new line is close to the old line.
+
+\includegraphics{hw1pr2d.png}
+    \end{enumerate}
+
+
 \end{solution}
 \newpage
 

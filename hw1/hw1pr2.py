@@ -57,8 +57,8 @@ if __name__ == '__main__':
 	# TODO: replace the m_opt and b_opt with the solution you obtained from
 	# 		part (a), note that y = mx + b
 	"*** YOUR CODE HERE ***"
-	m_opt = 0
-	b_opt = 0
+	m_opt = 62/35
+	b_opt = 18/35
 	"*** END YOUR CODE HERE ***"
 
 
@@ -74,8 +74,8 @@ if __name__ == '__main__':
 	X_space = []
 	y_space = []
 	"*** YOUR CODE HERE ***"
-
-
+	X_space = np.linspace(-1, 5, num=100).reshape(-1, 1)
+	y_space = (m_opt * X_space + b_opt).reshape(-1, 1)
 	"*** END YOUR CODE HERE ***"
 
 	# plot the optimal learn fit you obtained and save it to your current
@@ -97,8 +97,7 @@ if __name__ == '__main__':
 
 	noise = []
 	"*** YOUR CODE HERE ***"
-
-
+	noise = np.random.normal(mu, sigma, sampleSize).reshape(-1, 1)
 	"*** END YOUR CODE HERE ***"
 
 	# TODO: generate y-coordinate of the 100 points with noise
@@ -109,7 +108,7 @@ if __name__ == '__main__':
 
 	y_space_rand = np.zeros(len(X_space))
 	"*** YOUR CODE HERE ***"
-
+	y_space_rand = m_opt * X_space + b_opt + noise
 	"*** END YOUR CODE HERE ***"
 
 
@@ -127,7 +126,9 @@ if __name__ == '__main__':
 	X_space_stacked = X_space	# need to be replaced following hint 1 and 2
 	W_opt = None
 	"*** YOUR CODE HERE ***"
-
+	X_space_stacked = np.hstack((np.ones_like(y_space), X_space))
+	W_opt = np.linalg.solve(X_space_stacked.T @ X_space_stacked,
+		X_space_stacked.T @ y_space_rand)
 
 	"*** END YOUR CODE HERE ***"
 
@@ -144,7 +145,7 @@ if __name__ == '__main__':
 
 	y_pred_rand = []
 	"*** YOUR CODE HERE ***"
-
+	y_pred_rand = np.array([m_rand_opt * x + b_rand_opt for x in X_space]).reshape(-1, 1)
 
 	"*** END YOUR CODE HERE ***"
 
